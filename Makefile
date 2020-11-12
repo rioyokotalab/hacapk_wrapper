@@ -39,27 +39,13 @@ endif
 
 LINK=$(F90)
 
-OBJS= m_HACApK_calc_entry_ij.o main.o \
+OBJS= m_HACApK_calc_entry_ij.o main.o
 
+.SUFFIXES: .o .f90
 
-TARGET=test_kernel
-
-.SUFFIXES: .o .c .f90 .f95
-
-$(TARGET): $(OBJS)
-			$(LINK) -o $@ $(OBJS) $(LDFLAGS)
-
-.c.o: *.c
-			$(CC) -c $(CCFLAGS) $<
+main: $(OBJS)
+			$(LINK) $(OBJS) $(LDFLAGS)
 .f90.o: *.f90
-#			echo 'f90 complile'
-			$(F90) -c $< $(F90FLAGS)
-.f95.o: *.f95
-#			echo 'f95 complile'
 			$(F90) -c $< $(F90FLAGS)
 clean:
 	rm -f *.o *.mod $(TARGET)
-
-rmod:
-	rm -f m_*.o *.mod
-

@@ -2,10 +2,8 @@ module m_HACApK_calc_entry_ij
 
 !*** type :: st_HACApK_calc_entry
   type :: st_HACApK_calc_entry
-  real*8,pointer :: ao(:)
-  integer :: nd,lp61
   
-  real*8,pointer  :: data(:,:)
+  real*8,pointer :: data(:,:)
   real*8 :: p_sigma,p_delta
   integer :: ndim
 
