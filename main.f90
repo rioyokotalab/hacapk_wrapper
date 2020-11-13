@@ -1,5 +1,5 @@
 program main
-use m_HACApK_calc_entry_ij
+  use m_HACApK_calc_entry_ij
   implicit none
   integer :: i, j, nmax, ndim, ntrain
   real*8,dimension(:,:),allocatable :: k1
