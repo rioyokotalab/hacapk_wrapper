@@ -4,10 +4,10 @@ module m_HACApK_calc_entry_ij
   real*8 :: p_sigma,p_delta
   integer :: ndim
   end type st_HACApK_calc_entry
-contains
-  real*8 function HACApK_entry_ij(i, j, zbemv)
-  implicit real*8(a-h,o-z)
   type(st_HACApK_calc_entry) :: zbemv
+contains
+  real*8 function HACApK_entry_ij(i, j)
+  implicit real*8(a-h,o-z)
   
   if(i==j) then
     HACApK_entry_ij=1.0d0; return
