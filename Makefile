@@ -7,11 +7,11 @@ F90=ifort
 CXXFLAGS = -fopenmp -O3 -ip -mkl -I$(HICMA_ROOT)/include
 F90FLAGS = -fopenmp -O3 -ip -mkl -fpp
 LDFLAGS = -mkl -Wl,-rpath,${HICMA_ROOT}/dependencies/lib:${HICMA_ROOT}/lib ${HICMA_ROOT}/lib/libhicma.so -L${HICMA_ROOT}/lib -lhicma
-OBJS = m_HACApK_calc_entry_ij.o main.o
+OBJS = m_HACApK_calc_entry_ij.o main.o wrapper.o
 
 
 main: $(OBJS)
-	$(F90) $(OBJS) $(LDFLAGS)
+	$(F90) $(OBJS) -mkl -lstdc++
 	./a.out
 h_lu: h_lu.o
 	$(CXX) $? $(LDFLAGS)
