@@ -34,7 +34,7 @@ program main
     print "(10es11.2)",k1(:,j)
     x2(j) = b(j)
   end do
-  call hicma();
+  call hicma(ntrain);
   call dgetrf(ntrain, ntrain, k1, ntrain, ipiv, info)
   call dgetrs('N', ntrain, 1, k1, ntrain, ipiv, x2, ntrain, info)
   do i = 1, ntrain
