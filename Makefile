@@ -21,4 +21,4 @@ h_lu: h_lu.o
 .cpp.o: *.cpp
 	$(CXX) -c $< $(CXXFLAGS)
 clean:
-	rm -f *.o *.mod $(TARGET)
+	$(RM) *.mod *.o *.out
