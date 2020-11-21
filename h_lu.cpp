@@ -5,7 +5,6 @@
 #include <tuple>
 #include <vector>
 
-
 using namespace hicma;
 
 int main(int argc, char** argv) {
