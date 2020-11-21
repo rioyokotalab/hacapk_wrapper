@@ -3,9 +3,9 @@ program main
   use m_HACApK_calc_entry_ij
   implicit none
   integer :: i, j, nmax, ndim, ntrain, info
+  real*8 :: Aij
   integer,dimension(:),allocatable :: ipiv
   real*8,dimension(:),allocatable :: b, x, x2
-  real*8,dimension(:,:),allocatable :: k1
 
   ntrain = 10
   zbemv%p_sigma = 1.0d+3
@@ -13,7 +13,6 @@ program main
 
   allocate (ipiv(ntrain))
   allocate (b(ntrain),x(ntrain),x2(ntrain))
-  allocate (k1(ntrain,ntrain))
 
   open(1, file="Xtrain_MNIST.txt")
   read(1,*) nmax, ndim
@@ -28,15 +27,12 @@ program main
   do j = 1, ntrain
     b(j) = 0
     do i = 1, ntrain
-      k1(i,j) = HACApK_entry_ij(i, j)
-      b(j) = b(j) + k1(i,j) * x(i)
+      Aij = HACApK_entry_ij(i, j)
+      b(j) = b(j) + Aij * x(i)
     end do
-    print "(10es11.2)",k1(:,j)
     x2(j) = b(j)
   end do
-  call hicma(ntrain);
-  call dgetrf(ntrain, ntrain, k1, ntrain, ipiv, info)
-  call dgetrs('N', ntrain, 1, k1, ntrain, ipiv, x2, ntrain, info)
+  call hicma(ntrain, x2);
   do i = 1, ntrain
     print*,i,x(i),x2(i)
   end do
