@@ -3,11 +3,12 @@ program main
   use m_HACApK_calc_entry_ij
   implicit none
   integer :: i, j, nmax, ndim, ntrain, info
-  real*8 :: Aij
+  real :: tic, toc
+  real*8 :: Aij, diff, norm
   integer,dimension(:),allocatable :: ipiv
   real*8,dimension(:),allocatable :: b, x, x2
 
-  ntrain = 10
+  ntrain = 128
   zbemv%p_sigma = 1.0d+3
   zbemv%p_delta = 1.0d-0
 
@@ -32,10 +33,14 @@ program main
     end do
     x2(j) = b(j)
   end do
-  call hicma(ntrain, x2);
+  call hicma(ntrain, x2)
+  diff = 0
+  norm = 0
   do i = 1, ntrain
-    print*,i,x(i),x2(i)
+    diff = diff + (x(i) - x2(i)) ** 2
+    norm = norm + x(i) ** 2
   end do
+  print*,"Error: ", sqrt(diff/norm)
 
 end program
 
