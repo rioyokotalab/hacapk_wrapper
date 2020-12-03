@@ -18,8 +18,11 @@ extern "C" void hicma_(int& N, double *x) {
       A(i,j) = m_hacapk_calc_entry_ij_mp_hacapk_entry_ij_(I, J);
     }
   }
+  int rank = 8;
+  int nleaf = 32;
   Dense L, U;
-  std::tie(L, U) = getrf(A);
+  Hierarchical H(std::move(A), rank, nleaf);
+  std::tie(L, U) = getrf(H);
   trsm(L, b, TRSM_LOWER);
   trsm(U, b, TRSM_UPPER);
   for(int i=0; i<N; i++)
