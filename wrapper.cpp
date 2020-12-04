@@ -7,7 +7,7 @@ using namespace hicma;
 
 extern "C" double m_hacapk_calc_entry_ij_mp_hacapk_entry_ij_(int&, int&);
 
-extern "C" void hicma_(int& N, double *x) {
+extern "C" void hicma_(int& N, double *x, int& rank, int& nleaf) {
   hicma::initialize();
   Dense A(N, N);
   Dense b(N);
@@ -18,9 +18,7 @@ extern "C" void hicma_(int& N, double *x) {
       A(i,j) = m_hacapk_calc_entry_ij_mp_hacapk_entry_ij_(I, J);
     }
   }
-  int rank = 8;
-  int nleaf = 32;
-  Dense L, U;
+  Hierarchical L, U;
   Hierarchical H(std::move(A), rank, nleaf);
   std::tie(L, U) = getrf(H);
   trsm(L, b, TRSM_LOWER);
